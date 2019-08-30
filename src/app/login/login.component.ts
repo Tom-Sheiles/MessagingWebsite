@@ -22,14 +22,16 @@ export class LoginComponent implements OnInit {
 
     let userData = {"userName":this.userName};
 
-    console.log(userData);
     this.httpClient.post(BACKEND_URL + '/auth', userData)
     .subscribe((data: any)=>{
-     console.log("Response: ", data);
-     if(data.res == "valid"){
-      console.log("OKAY")
+
+      if(data.res == "valid"){
+
+        this.router.navigateByUrl('/dashboard')
      }
+
     });
+    
     this.userName = "";
   }
 

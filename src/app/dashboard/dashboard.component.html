@@ -1,0 +1,18 @@
+<ul>
+    <li><label><h3>Welcome </h3></label></li>
+    <li><label><h6 class="toolBarText"> {{name}}</h6></label></li>
+    <li><button class="toolBarButton">Log out</button></li>
+</ul>
+
+<body>
+    <h2 style="padding-top: 35px; padding-left: 10px">Rooms</h2>
+    <div *ngFor="let group of groups let i=index let c=count" style="padding: 10px">
+        <label>{{group.groupName}}:</label>
+        <br>
+        <div *ngFor="let room of group.rooms">
+            <label >{{room}}</label>
+            <button>Join</button>
+        </div>
+    </div>
+    
+</body>
