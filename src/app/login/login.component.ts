@@ -11,6 +11,8 @@ const BACKEND_URL = 'http://localhost:3000';
 })
 export class LoginComponent implements OnInit {
 
+  userName: string = "";
+
   constructor(private router: Router, private httpClient:HttpClient) { }
 
   ngOnInit() {
@@ -18,12 +20,17 @@ export class LoginComponent implements OnInit {
 
   onClick(){
 
-    let userdetails = {}
+    let userData = {"userName":this.userName};
 
-    this.httpClient.post(BACKEND_URL + '/auth', userdetails)
+    console.log(userData);
+    this.httpClient.post(BACKEND_URL + '/auth', userData)
     .subscribe((data: any)=>{
      console.log("Response: ", data);
+     if(data.res == "valid"){
+      console.log("OKAY")
+     }
     });
+    this.userName = "";
   }
 
 }
