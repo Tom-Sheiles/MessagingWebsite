@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
         let isInRoom = false;
 
         for(let j = i; j < rooms[i].users.length; j++){ //For all rooms
-          if(this.name == rooms[i].users[j] || this.userLevel > 2)
+          if(this.name == rooms[i].users[j] || this.userLevel > 3)
             isInRoom = true;
         }
 

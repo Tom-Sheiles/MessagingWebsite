@@ -5,20 +5,40 @@
 </ul>
 
 <body>
-    <h2 style="padding-top: 35px; padding-left: 10px; color: rgb(50, 34, 87)">Rooms</h2>
+    <h2 style="padding-top: 35px; padding-left: 10px; color: rgb(50, 34, 87)">Groups</h2>
     <div *ngFor="let group of groups let i=index let c=count" style="padding: 10px">
+
         <div class="card card-success roomCard">
+           
         <label class="roomName">{{group.groupName}}:</label>
         <br>
         <div *ngFor="let room of group.rooms" style="padding: 2px">
-            <label>{{room}}</label>
-           <!--- <button class="btn btn-primary roomButton"(click)="JoinRoom(group.groupName, room)">Join</button>-->
+            <button class="roomButton btn btn-outline-secondary" (click)="JoinRoom(group.groupName, room)">{{room}}</button>
         </div>
+        <div *ngIf="userLevel > 1">
+            <label class="adminPanel">Group Settings</label>
+            <div class="container" style="position: relative; padding-left: 20px">
+                <div class="row">
+                    <div class="col-" style="padding: 4px"><button class="btn addButton">Add User</button></div>
+                    <div class="col-" style="padding: 4px"><button class="btn removeButton">Remove User</button></div>
+                </div>
+                <div class="row">
+                    <div class="col-" style="padding: 4px"><button class="btn addButton">Add Channel</button></div>
+                    <div class="col-" style="padding: 4px"><button class="btn removeButton">Remove Channel</button></div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div *ngIf="userLevel > 1">
-        <label>Greater than 1</label>
-    </div> 
-    
+</div>
+<br>
+    <div class="container" style="position: absolute">
+        <div class="row"  *ngIf="userLevel > 2">
+            <div class="col-" style="padding: 4px">
+                <button class="btn btn-success" style="background-color: rgb(67, 181, 129)">Add Group</button>
+            </div> 
+            <div class="col-" style="padding: 4px">
+                <button class="btn btn-danger" style="background-color: rgb(240, 71, 64)">Remove Group</button>
+            </div>
+        </div>
+    </div>
 </body>
