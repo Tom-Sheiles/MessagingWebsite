@@ -1,7 +1,7 @@
 <ul>
     <li><label><h3>Welcome </h3></label></li>
     <li><label><h6 class="toolBarText"> {{name}}</h6></label></li>
-    <li><button class="toolBarButton">Log out</button></li>
+    <li><button class="toolBarButton" (click)="Logout()">Log out</button></li>
 </ul>
 
 <body>
@@ -9,8 +9,12 @@
     <div *ngFor="let group of groups let i=index let c=count" style="padding: 10px">
 
         <div class="card card-success roomCard">
-           
-        <label class="roomName">{{group.groupName}}:</label>
+           <div class="container">
+               <div class="row">
+                <div class="col-sm"><label class="roomName">{{group.groupName}}:</label></div>
+                <div class="col-sm"><label class="roomUsers">{{group.users.length}} Members <br> {{group.rooms.length}} Rooms</label></div>
+                </div>
+            </div>
         <br>
         <div *ngFor="let room of group.rooms" style="padding: 2px">
             <button class="roomButton btn btn-outline-secondary" (click)="JoinRoom(group.groupName, room)">{{room}}</button>

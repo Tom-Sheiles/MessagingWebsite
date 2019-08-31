@@ -17,6 +17,10 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private httpClient:HttpClient, private userInfo: UserInformationService) { }
 
   ngOnInit() {
+
+    this.userName = this.userInfo.getUsername();
+    if(this.userName != "")
+      this.router.navigateByUrl('/dashboard/' + this.userName);
   }
 
   onClick(){
@@ -28,6 +32,7 @@ export class LoginComponent implements OnInit {
       
       if(data.res == "valid"){
         this.userInfo.setUser(data);
+        this.userInfo.saveUsername();
         this.router.navigateByUrl('/dashboard/' + this.userName);
         this.userName = "";
      }

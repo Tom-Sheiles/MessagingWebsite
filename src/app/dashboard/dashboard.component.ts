@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
       rooms = JSON.parse(rooms);
       this.groups = [];
       
+      
       for(let i = 0; i < rooms.length; i++){ //For all groups
         console.log(rooms[i].users);
         let isInRoom = false;
@@ -51,12 +52,17 @@ export class DashboardComponent implements OnInit {
           this.nRooms += 1;
         }
       }
-
+      console.log(this.groups);
     }));
   }
 
   JoinRoom(group, room){
     console.log(group, room);
+  }
+
+  Logout(){
+    this.userInfo.Logout();
+    this.router.navigateByUrl('/');
   }
 
 }
