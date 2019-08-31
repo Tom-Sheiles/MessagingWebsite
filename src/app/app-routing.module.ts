@@ -5,7 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 const routes: Routes = [{path:'',component:LoginComponent},
-                        {path:'dashboard',component:DashboardComponent}];
+                        {path:'dashboard/:userName',component:DashboardComponent}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

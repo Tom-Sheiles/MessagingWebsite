@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import * as io from 'socket.io-client';
 import { nextTick } from 'q';
-const SERVER_URL = 'http://localhost:3000/messaging'
+const SERVER_URL = 'http://124.176.29.78:3000/messaging'
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class SocketService {
     this.socket.emit("getRooms", "message")
   }
 
-  roomList(next){
-    this.socket.on("roomList", res=>next(res));
+  roomList(rooms){
+    this.socket.on("roomList", res=>rooms(res));
   }
 }

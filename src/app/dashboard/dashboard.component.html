@@ -5,14 +5,20 @@
 </ul>
 
 <body>
-    <h2 style="padding-top: 35px; padding-left: 10px">Rooms</h2>
+    <h2 style="padding-top: 35px; padding-left: 10px; color: rgb(50, 34, 87)">Rooms</h2>
     <div *ngFor="let group of groups let i=index let c=count" style="padding: 10px">
-        <label>{{group.groupName}}:</label>
+        <div class="card card-success roomCard">
+        <label class="roomName">{{group.groupName}}:</label>
         <br>
-        <div *ngFor="let room of group.rooms">
-            <label >{{room}}</label>
-            <button>Join</button>
+        <div *ngFor="let room of group.rooms" style="padding: 2px">
+            <label>{{room}}</label>
+           <!--- <button class="btn btn-primary roomButton"(click)="JoinRoom(group.groupName, room)">Join</button>-->
+        </div>
         </div>
     </div>
+
+    <div *ngIf="userLevel > 1">
+        <label>Greater than 1</label>
+    </div> 
     
 </body>
