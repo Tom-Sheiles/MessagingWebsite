@@ -1,9 +1,11 @@
 var fs = require('fs');
 var fileName = './groups.urs';
+var ursfileName = './users.urs';
 
 module.exports = {
     connect: function(io, port){
         var groups = []
+        var users = []
 
         function getGroups(){
             fs.readFile(fileName, 'utf-8', function(err, groupData){
@@ -14,6 +16,7 @@ module.exports = {
                 groups = (data);
                 console.log(groups);
             });
+
         }
 
         function saveData(){
@@ -22,9 +25,24 @@ module.exports = {
                 console.log("Written to group file")
             });
         }
+
+        function getUsers(){
+            fs.readFile(ursfileName, 'utf-8', function(err, usersData){
+                data = JSON.parse(usersData)
+                users = (data);
+            });
+        }
+
+        function saveUsers(){
+            string = JSON.stringify(users)
+            fs.writeFile(ursfileName, string, (err)=>{
+                console.log("Written to users file")
+            })
+        }
         
         //groups.push({"groupName":"Group 1","rooms":["room1","room2","room3","r4","r5","r6"],"users":["user2","user3","user5"]},{"groupName":"Group 2","rooms":["room4","room5","room6"],"users":["user1","user5"]});
         getGroups();
+        getUsers();
         
 
         const messaging = io.of('/messaging');
@@ -96,6 +114,18 @@ module.exports = {
                     }
                 }
                 saveData()
+            });
+
+            socket.on('promote', (name, level)=>{
+                
+                for(let i = 0; i < users.length; i++){
+                    if(users[i]['userName'] == name && users[i]['userName'] != 'supp')
+                        users[i]['userLevel'] = level;
+                }
+                
+                console.log(users)
+                saveUsers();
+               
             });
 
         });

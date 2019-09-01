@@ -107,5 +107,10 @@ export class DashboardComponent implements OnInit {
     this.socketService.removeGroup(this.groupInputField)
     this.groupInputField = '';
   }
+
+  promoteUser(level){
+    this.socketService.promoteUser(this.groupInputField, level)
+    this.groupInputField = '';
+  }
  
 }

@@ -12,7 +12,7 @@
            <div class="container">
                <div class="row">
                 <div class="col-sm"><label class="roomName">{{group.groupName}}:</label></div>
-                <div class="col-sm"><label class="roomUsers">{{group.users.length}} Members <br> {{group.rooms.length}} Rooms</label></div>
+                <div class="col-sm"><label (click)="click()" class="roomUsers">{{group.users.length}} Members <br> {{group.rooms.length}} Rooms</label></div>
                 </div>
             </div>
         <br>
@@ -42,6 +42,7 @@
 </div>
 <br>
 <div style="padding: 10px" *ngIf="userLevel > 2">
+    <h3>Admin Controls</h3>
         <input placeholder="Group Name" class="form-control" [(ngModel)]="groupInputField">
     </div>
     <br>
@@ -52,6 +53,17 @@
             </div> 
             <div class="col-" style="padding: 4px">
                 <button (click)="removeGroup()" class="btn btn-danger" style="background-color: rgb(240, 71, 64)">Remove Group</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-" style="padding: 4px">
+                <button (click)="promoteUser(2)" *ngIf="userLevel > 2" class="btn outlinehl btn-outline-primary">Promote to Group Assis</button>
+            </div>
+            <div class="col-" style="padding: 4px">
+                <button (click)="promoteUser(3)" *ngIf="userLevel > 3" class="btn outlinehl btn-outline-primary">Promote to Group Admin</button>
+            </div>
+            <div class="col-" style="padding: 4px">
+                <button (click)="promoteUser(4)" *ngIf="userLevel > 3" class="btn outlinehl btn-outline-primary">Promote to Super Admin</button>
             </div>
         </div>
     </div>
