@@ -1,0 +1,1 @@
+[{"groupName":"Group 1","rooms":["room1","room2"],"users":["user2","user3","user5","user5"]},{"groupName":"Group 2","rooms":["room4","room5","room6"],"users":["user1","user5"]}]

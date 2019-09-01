@@ -40,4 +40,13 @@ export class SocketService {
   removeChannel(group, name): void{
     this.socket.emit('removeChannel', group, name);
   }
+
+  addGroup(name, user):void{
+    this.socket.emit('addGroup', name, user);
+  }
+
+  removeGroup(name): void{
+    console.log(name)
+    this.socket.emit('removeGroup', name);
+  }
 }

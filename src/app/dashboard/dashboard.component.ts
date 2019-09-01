@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
   userData: object;
   closeResult: string;
   inputField: string = '';
+  groupInputField: string = '';
   removeUserDisplay = 'none';
   addUserDisplay = 'none';
 
@@ -37,7 +38,6 @@ export class DashboardComponent implements OnInit {
     this.userData = this.userInfo.getData();
     if(this.userData == undefined)
       this.router.navigateByUrl('/');
-    console.log(this.userData);
 
     if(this.userData != undefined)
       this.userLevel = this.userData['userLevel'];
@@ -49,22 +49,19 @@ export class DashboardComponent implements OnInit {
       rooms = JSON.parse(rooms);
       this.groups = [];
       
-      
       for(let i = 0; i < rooms.length; i++){ //For all groups
-        console.log(rooms[i].users);
         let isInRoom = false;
-
-        for(let j = i; j < rooms[i].users.length; j++){ //For all rooms
+        for(let j = 0; j < rooms[i].users.length; j++){ //For all users
           if(this.name == rooms[i].users[j] || this.userLevel > 3)
             isInRoom = true;
         }
 
         if(isInRoom){
+          //console.log("Pushed room: ", rooms[i]);
           this.groups.push(rooms[i]);
           this.nRooms += 1;
         }
       }
-      console.log(this.groups);
     }));
   }
 
@@ -99,6 +96,16 @@ export class DashboardComponent implements OnInit {
     this.socketService.removeChannel(group, this.inputField);
     this.inputField = '';
     this.socketService.getRooms();
+  }
+
+  addGroup(){
+    this.socketService.addGroup(this.groupInputField, this.name)
+    this.groupInputField = '';
+  }
+
+  removeGroup(){
+    this.socketService.removeGroup(this.groupInputField)
+    this.groupInputField = '';
   }
  
 }
