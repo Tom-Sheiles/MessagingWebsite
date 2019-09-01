@@ -80,11 +80,25 @@ export class DashboardComponent implements OnInit {
   addUser(group){
     this.socketService.addUser(group, this.inputField);
     this.inputField = '';
+    this.socketService.getRooms();
   }
 
   removeUser(group){
     this.socketService.removeUser(group, this.inputField);
     this.inputField = '';
+    this.socketService.getRooms();
+  }
+
+  addChannel(group){
+    this.socketService.addChannel(group, this.inputField);
+    this.inputField = '';
+    this.socketService.getRooms();
+  }
+
+  removeChannel(group){
+    this.socketService.removeChannel(group, this.inputField);
+    this.inputField = '';
+    this.socketService.getRooms();
   }
  
 }

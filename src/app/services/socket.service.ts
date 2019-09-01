@@ -32,4 +32,12 @@ export class SocketService {
   removeUser(group, name): void{
     this.socket.emit('removeUser', group, name);
   }
+
+  addChannel(group, name): void{
+    this.socket.emit('addChannel', group, name);
+  }
+
+  removeChannel(group, name): void{
+    this.socket.emit('removeChannel', group, name);
+  }
 }
