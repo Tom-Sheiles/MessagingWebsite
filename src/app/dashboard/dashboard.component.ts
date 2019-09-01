@@ -3,11 +3,16 @@ import { Router } from '@angular/router';
 import { SocketService } from '../services/socket.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserInformationService } from '../services/user-information.service';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap'
+
+import * as $ from 'jquery';
+import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
+
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
 
@@ -16,9 +21,16 @@ export class DashboardComponent implements OnInit {
   nRooms = 0;
   userLevel = 0;
   userData: object;
+  closeResult: string;
+  inputField: string = '';
+  removeUserDisplay = 'none';
+  addUserDisplay = 'none';
 
-  constructor(private router: Router, private activeRoute: ActivatedRoute,private socketService: SocketService, private userInfo: UserInformationService) { }
 
+  constructor(private router: Router, private activeRoute: ActivatedRoute,private socketService: SocketService, private userInfo: UserInformationService,
+    private ngbmodal: NgbModal) { }
+
+    
   ngOnInit() {
 
     this.name = this.activeRoute.snapshot.params.userName;
@@ -65,4 +77,14 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
+  addUser(group){
+    this.socketService.addUser(group, this.inputField);
+    this.inputField = '';
+  }
+
+  removeUser(group){
+    this.socketService.removeUser(group, this.inputField);
+    this.inputField = '';
+  }
+ 
 }

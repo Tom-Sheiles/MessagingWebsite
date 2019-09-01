@@ -24,4 +24,12 @@ export class SocketService {
   roomList(rooms){
     this.socket.on("roomList", res=>rooms(res));
   }
+
+  addUser(group, name): void{
+    this.socket.emit("addUser",group, name);
+  }
+
+  removeUser(group, name): void{
+    this.socket.emit('removeUser', group, name);
+  }
 }

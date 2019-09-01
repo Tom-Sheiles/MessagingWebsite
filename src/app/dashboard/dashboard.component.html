@@ -16,19 +16,25 @@
                 </div>
             </div>
         <br>
-        <div *ngFor="let room of group.rooms" style="padding: 2px">
-            <button class="roomButton btn btn-outline-secondary" (click)="JoinRoom(group.groupName, room)">{{room}}</button>
-        </div>
-        <div *ngIf="userLevel > 1">
-            <label class="adminPanel">Group Settings</label>
-            <div class="container" style="position: relative; padding-left: 20px">
-                <div class="row">
-                    <div class="col-" style="padding: 4px"><button class="btn addButton">Add User</button></div>
-                    <div class="col-" style="padding: 4px"><button class="btn removeButton">Remove User</button></div>
+     
+            <div *ngFor="let room of group.rooms" style="padding: 2px">
+               
+                <button class="roomButton btn btn-outline-secondary" (click)="JoinRoom(group.groupName, room)">{{room}}</button>
+        
+            </div>
+            <div *ngIf="userLevel > 1">
+                <label class="adminPanel">Group Settings</label>
+                <div class="container" style="position: relative; padding-left: 20px">
+                    <div class="row">
+                        <div class="col-" style="padding: 4px"><button class="btn addButton" (click)="addUser(group.groupName)">Add User</button></div>
+                        <div class="col-" style="padding: 4px"><button class="btn removeButton" (click)="removeUser(group.groupName)">Remove User</button></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-" style="padding: 4px"><button class="btn addButton">Add Channel</button></div>
+                        <div class="col-" style="padding: 4px"><button class="btn removeButton">Remove Channel</button></div>
                 </div>
-                <div class="row">
-                    <div class="col-" style="padding: 4px"><button class="btn addButton">Add Channel</button></div>
-                    <div class="col-" style="padding: 4px"><button class="btn removeButton">Remove Channel</button></div>
+                <div class="row" style="padding: 5px">
+                    <input placeholder="Name" class="form-control" [(ngModel)]="inputField">
                 </div>
             </div>
         </div>
@@ -46,3 +52,21 @@
         </div>
     </div>
 </body>
+
+<!---ADD USER DIALOGE-->
+<div class="backdrop" [ngStyle]="{'display':addUserDisplay}"></div>
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':addUserDisplay}">
+ <div class="modal-dialog" role="document">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h4 class="modal-title" style="align-content: left; position: absolute;">Input Name</h4>
+     </div>
+     <div class="modal-body">
+    <div class="input-group mb-3" style="position: absolute; right:15px">
+       <input placeholder="Name" class="form-control" [(ngModel)]="inputField">
+    </div>
+     </div>
+     <div class="modal-footer">
+       <button type="button" class="btn btn-default" (click)="onCloseHandled()" >Submit</button>
+</div>
+
