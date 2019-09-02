@@ -3,6 +3,7 @@ var userFile = "./users.urs";
 
 module.exports = function(app, path){
 
+    // Post request is called from the login page of the client and the validity of the request and user information is returned in the respons
     app.post('/auth', function(req, res){
 
         console.log("User: ", req.body.userName);

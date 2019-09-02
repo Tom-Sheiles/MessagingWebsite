@@ -14,6 +14,8 @@ import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
+
+// The dashboard page is responsible for displaying the group and room infromation for each user
 export class DashboardComponent implements OnInit {
 
   name = "name";
@@ -31,7 +33,8 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router, private activeRoute: ActivatedRoute,private socketService: SocketService, private userInfo: UserInformationService,
     private ngbmodal: NgbModal) { }
 
-    
+  
+  // On init is called each time the page is loaded and retrieves the necessary information from the server
   ngOnInit() {
 
     this.name = this.activeRoute.snapshot.params.userName;
@@ -69,6 +72,7 @@ export class DashboardComponent implements OnInit {
     console.log(group, room);
   }
 
+  // Add and remove functions called as button event listeners by the pages html
   Logout(){
     this.userInfo.Logout();
     this.router.navigateByUrl('/');

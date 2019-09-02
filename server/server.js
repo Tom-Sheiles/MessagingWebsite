@@ -14,8 +14,9 @@ app.use(bodyParser.json());
 
 var port = 3000;
 
+// Begin listening for client connection on the specified port
 var server = http.listen(port, function(){
-    console.log("Started Server on ", port, " at")
+    console.log("Started Server on ", port)
 });
 
 sockets.connect(io, 3000);

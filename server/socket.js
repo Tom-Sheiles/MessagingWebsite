@@ -7,6 +7,7 @@ module.exports = {
         var groups = []
         var users = []
 
+        // Get and save functions are responsible for reading to and writing from the files that store user and group information
         function getGroups(){
             fs.readFile(fileName, 'utf-8', function(err, groupData){
                 if(err != null)
@@ -16,23 +17,19 @@ module.exports = {
                 groups = (data);
                 console.log(groups);
             });
-
         }
-
         function saveData(){
             string = JSON.stringify(groups)
             fs.writeFile(fileName, string, (err)=>{
                 console.log("Written to group file")
             });
         }
-
         function getUsers(){
             fs.readFile(ursfileName, 'utf-8', function(err, usersData){
                 data = JSON.parse(usersData)
                 users = (data);
             });
         }
-
         function saveUsers(){
             string = JSON.stringify(users)
             fs.writeFile(ursfileName, string, (err)=>{
@@ -40,20 +37,20 @@ module.exports = {
             })
         }
         
-        //groups.push({"groupName":"Group 1","rooms":["room1","room2","room3","r4","r5","r6"],"users":["user2","user3","user5"]},{"groupName":"Group 2","rooms":["room4","room5","room6"],"users":["user1","user5"]});
         getGroups();
         getUsers();
         
 
         const messaging = io.of('/messaging');
 
+        // connection socket event is called when a new client connects to the server
         messaging.on('connection',(socket) =>{
 
             socket.on('getRooms', (m)=>{
                 messaging.emit('roomList', JSON.stringify(groups));
             });
 
-
+            // each socket.on call is called by each client connection 
             socket.on("addUser", (addGroup, name)=>{
                 for(let i = 0; i < groups.length; i++){
                     if(groups[i]['groupName'] == addGroup)
