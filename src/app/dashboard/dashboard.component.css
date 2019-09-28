@@ -142,3 +142,8 @@ box-shadow:         3px 3px 5px 6px #ccc;
 .outlinehl:hover{
     background-color: rgb(67, 181, 129);
 }
+
+.grid-container{
+    display: grid;
+    grid-template-columns: auto 41cm;
+}

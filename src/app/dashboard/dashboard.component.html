@@ -5,6 +5,8 @@
 </ul>
 
 <body>
+    <div class="grid-container">
+    <div>
     <h2 style="padding-top: 35px; padding-left: 10px; color: rgb(50, 34, 87)">Groups</h2>
     <div *ngFor="let group of groups let i=index let c=count" style="padding: 10px">
 
@@ -42,34 +44,39 @@
 </div>
 <br>
 <div style="padding: 10px" *ngIf="userLevel > 2">
-    <h3>Admin Controls</h3>
-        <input placeholder="Group Name" class="form-control" [(ngModel)]="groupInputField">
-    </div>
-    <br>
-    <div class="container" style="position: absolute; left:7px">
-        <div class="row"  *ngIf="userLevel > 2">
-            <div class="col-" style="padding: 4px">
-                <button (click)="addGroup()" class="btn btn-success" style="background-color: rgb(67, 181, 129)">Add Group</button>
-            </div> 
-            <div class="col-" style="padding: 4px">
-                <button (click)="removeGroup()" class="btn btn-danger" style="background-color: rgb(240, 71, 64)">Remove Group</button>
-            </div>
+        <h3>Admin Controls</h3>
+            <input placeholder="Name" class="form-control" style="width: 6.8cm" [(ngModel)]="groupInputField">
         </div>
-        <div class="row" *ngIf="userLevel > 2" style="padding: 4px">
-            <button (click)="newUser()" class="btn btn-primary" style="width: 6.5cm; text-align: center">Register new User</button>
+        <br>
+        <div class="container" style="position: absolute; left:7px">
+            <div class="row"  *ngIf="userLevel > 2">
+                <div class="col-" style="padding: 4px">
+                    <button (click)="addGroup()" class="btn btn-success" style="background-color: rgb(67, 181, 129)">Add Group</button>
+                </div> 
+                <div class="col-" style="padding: 4px">
+                    <button (click)="removeGroup()" class="btn btn-danger" style="background-color: rgb(240, 71, 64)">Remove Group</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-" style="padding: 4px">
+                    <button (click)="promoteUser(2)" *ngIf="userLevel > 2" style="width: 6.5cm; text-align: center" class="btn outlinehl btn-outline-primary">Promote User</button>
+                </div>
+            </div>
+            <div class="row" *ngIf="userLevel > 2" style="padding: 4px">
+                    <button (click)="newUser()" class="btn btn-primary" style="width: 6.5cm; text-align: center">Register new User</button>
+                </div>
         </div>
-        <div class="row">
-            <div class="col-" style="padding: 4px">
-                <button (click)="promoteUser(2)" *ngIf="userLevel > 2" class="btn outlinehl btn-outline-primary">Promote to Group Assis</button>
-            </div>
-            <div class="col-" style="padding: 4px">
-                <button (click)="promoteUser(3)" *ngIf="userLevel > 3" class="btn outlinehl btn-outline-primary">Promote to Group Admin</button>
-            </div>
-            <div class="col-" style="padding: 4px">
-                <button (click)="promoteUser(4)" *ngIf="userLevel > 3" class="btn outlinehl btn-outline-primary">Promote to Super Admin</button>
+</div>
+<div *ngIf="isInRoom">
+    <div style="padding-top: 2.5cm">
+        <div class="card" style="width: 96%; height: 20cm;">
+            <div class="card-body">
+                TEXT
             </div>
         </div>
     </div>
     
+</div>
+</div>    
 </body>
 

@@ -54,7 +54,7 @@ export class SocketService {
     this.socket.emit('removeGroup', name);
   }
 
-  promoteUser(name, level){
-    this.socket.emit('promote', name, level)
+  promoteUser(name){
+    this.socket.emit('promote', name)
   }
 }

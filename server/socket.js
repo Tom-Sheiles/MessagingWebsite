@@ -88,20 +88,18 @@ module.exports = {
                 });
             });
 
-            socket.on('promote', (name, level)=>{
-                
-                usersDB.updateOne({"userName":name},{$set:{"userLevel":level}},(err)=>{
-                    updateGroups();
-                    console.log("Set " + name + " to level " + level);
+            socket.on('promote', (name)=>{
+                console.log("promote")
+                usersDB.find({"userName":name}).toArray((err,result)=>{
+                    if(result[0].userLevel < 4){
+                        usersDB.updateOne({"userName":name},{$set:{"userLevel":result[0].userLevel+1}},(err)=>{
+                            updateGroups();
+                            console.log("Set " + name + " to level " + result[0].userLevel+1);
+                        })
+                    }
                 })
-                /*
-                for(let i = 0; i < users.length; i++){
-                    if(users[i]['userName'] == name && users[i]['userName'] != 'supp')
-                        users[i]['userLevel'] = level;
-                }
                 
-                console.log(users)
-                saveUsers();*/
+               
                
             });
 

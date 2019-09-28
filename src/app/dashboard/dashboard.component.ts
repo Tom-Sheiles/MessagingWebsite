@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit {
   groupInputField: string = '';
   removeUserDisplay = 'none';
   addUserDisplay = 'none';
+  isInRoom = false;
 
 
   constructor(private router: Router, private activeRoute: ActivatedRoute,private socketService: SocketService, private userInfo: UserInformationService,
@@ -121,8 +122,8 @@ export class DashboardComponent implements OnInit {
     this.groupInputField = '';
   }
 
-  promoteUser(level){
-    this.socketService.promoteUser(this.groupInputField, level)
+  promoteUser(){
+    this.socketService.promoteUser(this.groupInputField)
     this.groupInputField = '';
   }
  
