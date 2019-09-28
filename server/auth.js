@@ -1,14 +1,37 @@
 var fs = require('fs')
 var userFile = "./users.urs";
 
-module.exports = function(app, path){
+module.exports = function(app, path, database){
 
     // Post request is called from the login page of the client and the validity of the request and user information is returned in the respons
     app.post('/auth', function(req, res){
 
-        console.log("User: ", req.body.userName);
-        currentUser = undefined;
+        console.log("User: ", req.body);
+        currentUser = req.body;
 
+        const db = database.collection('users');
+
+        db.find({userName: currentUser.userName}).toArray((err,existingUser)=>{
+            console.log(existingUser);
+            if(existingUser.length == 0){
+                res.send({res:"invalid"});
+            }else{
+                existingUser[0]['res'] = 'valid';
+                res.send(existingUser[0]);
+            }
+        })
+
+        /*db.insertOne(req.body, (err, result)=>{
+            if(err) throw err;
+            console.log("Added " + req.body.userName + " To the database")
+            var users = db.find({}).toArray(function(err,result){
+                if(err) throw err;
+                console.log(result);
+            })
+        })*/
+
+        
+        /*
         fs.readFile(userFile, "utf-8", function(err, userData){
             
             
@@ -47,7 +70,7 @@ module.exports = function(app, path){
             }
         });
 
-       //
+       */
         
     });
 }

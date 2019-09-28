@@ -49,16 +49,19 @@ export class DashboardComponent implements OnInit {
     this.socketService.getRooms();
 
     this.socketService.roomList((rooms=>{
+      console.log(rooms);
       rooms = JSON.parse(rooms);
       this.groups = [];
       
-      for(let i = 0; i < rooms.length; i++){ //For all groups
-        let isInRoom = false;
+      let isInRoom = false;
+      let i = 0;
+      
+      for(i; i < rooms.length; i++){ //For all groups
         for(let j = 0; j < rooms[i].users.length; j++){ //For all users
           if(this.name == rooms[i].users[j] || this.userLevel > 3)
             isInRoom = true;
         }
-
+      
         if(isInRoom){
           //console.log("Pushed room: ", rooms[i]);
           this.groups.push(rooms[i]);
@@ -66,6 +69,7 @@ export class DashboardComponent implements OnInit {
         }
       }
     }));
+
   }
 
   JoinRoom(group, room){
@@ -103,11 +107,13 @@ export class DashboardComponent implements OnInit {
   }
 
   addGroup(){
+    console.log(this.groupInputField)
     this.socketService.addGroup(this.groupInputField, this.name)
     this.groupInputField = '';
   }
 
   removeGroup(){
+    console.log(this.groupInputField)
     this.socketService.removeGroup(this.groupInputField)
     this.groupInputField = '';
   }

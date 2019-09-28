@@ -30,12 +30,16 @@ export class LoginComponent implements OnInit {
 
     this.httpClient.post(BACKEND_URL + '/auth', userData)
     .subscribe((data: any)=>{
+      console.log(data)
       
       if(data.res == "valid"){
         this.userInfo.setUser(data);
         this.userInfo.saveUsername();
         this.router.navigateByUrl('/dashboard/' + this.userName);
         this.userName = "";
+     }else{
+       alert("Account not found");
+       this.userName = "";
      }
 
     });

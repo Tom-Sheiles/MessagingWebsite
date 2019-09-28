@@ -21,6 +21,8 @@
     "@angular/router": "~8.2.0",
     "@ng-bootstrap/ng-bootstrap": "^5.1.0",
     "@types/jquery": "^3.3.31",
+    "mongo": "^0.1.0",
+    "mongodb": "^3.3.2",
     "ngb-modal": "^2.0.3",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
