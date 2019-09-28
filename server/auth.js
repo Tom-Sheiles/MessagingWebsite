@@ -16,8 +16,12 @@ module.exports = function(app, path, database){
             if(existingUser.length == 0){
                 res.send({res:"invalid"});
             }else{
+                if(existingUser[0].password != currentUser.password){
+                    res.send({valid:"Password Incorrect"});
+                }else{
                 existingUser[0]['res'] = 'valid';
                 res.send(existingUser[0]);
+                }
             }
         })
 

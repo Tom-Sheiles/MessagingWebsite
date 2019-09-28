@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
     this.socketService.getRooms();
 
     this.socketService.roomList((rooms=>{
-      console.log(rooms);
+      //console.log(rooms);
       rooms = JSON.parse(rooms);
       this.groups = [];
       
@@ -70,6 +70,9 @@ export class DashboardComponent implements OnInit {
       }
     }));
 
+  }
+  newUser(){
+    this.router.navigateByUrl("register");
   }
 
   JoinRoom(group, room){

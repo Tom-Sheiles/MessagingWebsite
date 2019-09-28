@@ -45,6 +45,7 @@ var server = http.listen(port, function(){
             })
         }
         require('./auth')(app,filePath, dbo);
+        require('./register')(app, filePath, dbo);
         sockets.connect(io, 3000, dbo);
 
     });

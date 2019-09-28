@@ -13,6 +13,7 @@ const BACKEND_URL = 'http://localhost:3000';
 export class LoginComponent implements OnInit {
 
   userName: string = "";
+  password: string = "";
 
   constructor(private router: Router, private httpClient:HttpClient, private userInfo: UserInformationService) { }
 
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
   // On click is called by the login buttons event listener and sends a validation request to the node server
   onClick(){
 
-    let userData = {"userName":this.userName};
+    let userData = {"userName":this.userName,"password":this.password};
 
     this.httpClient.post(BACKEND_URL + '/auth', userData)
     .subscribe((data: any)=>{
@@ -36,11 +37,14 @@ export class LoginComponent implements OnInit {
         this.userInfo.setUser(data);
         this.userInfo.saveUsername();
         this.router.navigateByUrl('/dashboard/' + this.userName);
-        this.userName = "";
-     }else{
+     }else if (data.res == "invalid"){
        alert("Account not found");
-       this.userName = "";
+       
+     }else{
+       alert("Password Incorrect");
      }
+      this.userName = "";
+      this.password = ""
 
     });
     

@@ -1,0 +1,15 @@
+.input{
+    align-content: center;
+    margin: auto;
+    padding: 10px;
+    width: 50%;
+}
+
+.inputBar{
+    padding: 5px;
+    width: 80%;
+}
+
+.divBorder{
+    padding: 5px;
+}

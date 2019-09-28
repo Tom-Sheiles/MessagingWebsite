@@ -55,6 +55,9 @@
                 <button (click)="removeGroup()" class="btn btn-danger" style="background-color: rgb(240, 71, 64)">Remove Group</button>
             </div>
         </div>
+        <div class="row" *ngIf="userLevel > 2" style="padding: 4px">
+            <button (click)="newUser()" class="btn btn-primary" style="width: 6.5cm; text-align: center">Register new User</button>
+        </div>
         <div class="row">
             <div class="col-" style="padding: 4px">
                 <button (click)="promoteUser(2)" *ngIf="userLevel > 2" class="btn outlinehl btn-outline-primary">Promote to Group Assis</button>
