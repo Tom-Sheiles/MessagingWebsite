@@ -37,6 +37,10 @@ export class SocketService {
     this.socket.on("messageList",res=>messages(res))
   }
 
+  sendMessage(messageObject, group, room, callback){
+    this.socket.emit("sendMessage",JSON.stringify(messageObject), group, room);
+  }
+
   addUser(group, name): void{
     this.socket.emit("addUser",group, name);
   }

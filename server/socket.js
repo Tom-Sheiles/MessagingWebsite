@@ -117,7 +117,19 @@ module.exports = {
                         messaging.emit("messageList", JSON.stringify(msgRes[0]));
                     }
                 })
-                
+            })
+
+            socket.on("sendMessage",(message,group,room)=>{
+                var messageObject = JSON.parse(message)
+                messagesDB.updateOne({'group':group,'room':room},{$push:{'messages':{$each:[messageObject]}}},()=>{
+                    messagesDB.find({'group':group,'room':room}).toArray((err,msgRes)=>{
+                        messaging.emit('messageList',JSON.stringify(msgRes[0]));
+                    })
+                })
+            })
+
+            socket.on("sendImage",(image)=>{
+                console.log(JSON.parse(image));
             })
 
         });

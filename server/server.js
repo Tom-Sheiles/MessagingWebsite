@@ -10,6 +10,8 @@ const sockets = require("./socket.js");
 var mongo = require("mongodb").MongoClient;
 var mongoUrl = "mongodb://localhost:27012";
 
+const formidable = require("formidable");
+
 app.use(cors());
 
 app.use(express.static(__dirname + '/../dist/Messaging'));
@@ -52,6 +54,8 @@ var server = http.listen(port, function(){
         }
         require('./auth')(app,filePath, dbo);
         require('./register')(app, filePath, dbo);
+        require('./imageStorage')(app,formidable);
+        app.use('/images',express.static(filePath.join(__dirname, './images')))
         sockets.connect(io, 3000, dbo);
 
     });

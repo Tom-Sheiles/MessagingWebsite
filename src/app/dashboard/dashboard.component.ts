@@ -7,6 +7,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap'
 
 import * as $ from 'jquery';
 import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -35,9 +36,10 @@ export class DashboardComponent implements OnInit {
   currentRoom = "";
   currentServer = "";
   currentMessage = "";
+  selectedFile = null;
 
   constructor(private router: Router, private activeRoute: ActivatedRoute,private socketService: SocketService, private userInfo: UserInformationService,
-    private ngbmodal: NgbModal) { }
+    private ngbmodal: NgbModal, private http: HttpClient) { }
 
   
   // On init is called each time the page is loaded and retrieves the necessary information from the server
@@ -78,8 +80,13 @@ export class DashboardComponent implements OnInit {
 
     this.socketService.messageList((messageReturn=>{
       messageReturn = JSON.parse(messageReturn);
-      if(messageReturn.messages.length > 0)
-        this.messages.push(messageReturn.messages)
+      if(messageReturn.messages.length > 0){
+        this.messages = [];
+        for(let i = 0; i < messageReturn.messages.length; i++){
+          //this.messages.push(messageReturn.messages)
+          this.messages.push(messageReturn.messages[i]);
+        }
+      }
       console.log(messageReturn);
     }))
 
@@ -109,7 +116,26 @@ export class DashboardComponent implements OnInit {
 
   sendMessage(){
     console.log(this.currentMessage, this.currentServer, this.currentRoom);
+    var messageObject = {"name":this.name,"profile":"profilepic","message":this.currentMessage}
+    this.socketService.sendMessage(messageObject, this.currentServer, this.currentRoom,()=>{
+      this.currentMessage = "";
+    })
     this.currentMessage = "";
+    
+  }
+
+  sendImage(event: any){
+    console.log(event)
+    this.selectedFile = event.target.files[0];
+
+    const imageData = new FormData();
+    imageData.append('image', this.selectedFile, this.selectedFile.name)
+    this.http.post('http://localhost:3000/imageStorage',imageData).subscribe((data:any)=>{
+      console.log(data)
+      let imageObject = {'name':this.name,"profile":"profilepic","image":data.name,"message":this.currentMessage}
+      this.socketService.sendMessage(imageObject, this.currentServer, this.currentRoom, ()=>{})
+      this.currentMessage = "";
+    });
   }
 
   // Add and remove functions called as button event listeners by the pages html

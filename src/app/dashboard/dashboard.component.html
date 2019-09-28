@@ -67,13 +67,14 @@
                 </div>
         </div>
 </div>
-<div *ngIf="isInRoom">
-    <div style="padding-top: 2.5cm">
+<div *ngIf="isInRoom" style="padding-top: 1.5cm">
+    <h4>{{currentServer}} : {{currentRoom}}</h4>
+    <div>
         <div class="card" style="width: 96%; height: 20cm; overflow-y: auto">
             <div class="card-body">
                 <div style="height:90%">
                     <div *ngFor="let message of messages">
-                        <h6>{{message.name}}:<br>{{message.message}}</h6>
+                        <h6>{{message.name}}:<br>{{message.message}}</h6><img *ngIf="message.image != null" src="images\{{message.image}}">
                         <hr>
                     </div>
                     <br></div>
@@ -81,7 +82,7 @@
         </div>
     </div>
     <div class="input-group mb-3" style="width: 39.5cm">
-        <div class="input-group-prepend"><button>+</button></div>
+        <div class="input-group-prepend"><label class="btn btn-secondary">+<input type="file" style="display: none" accept="image/*" (change)="sendImage($event)"></label></div>
         <input [(ngModel)]="currentMessage" class="form-control" placeholder="Message">
         <div class="input-group-append">
             <button (click)="sendMessage()" class="btn btn-secondary">SEND</button>
