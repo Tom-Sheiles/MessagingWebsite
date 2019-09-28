@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { SocketService } from '../services/socket.service';
 import { ActivatedRoute } from '@angular/router';
@@ -29,7 +29,12 @@ export class DashboardComponent implements OnInit {
   removeUserDisplay = 'none';
   addUserDisplay = 'none';
   isInRoom = false;
-
+  Arr = Array;
+  num = 100;
+  messages = [];
+  currentRoom = "";
+  currentServer = "";
+  currentMessage = "";
 
   constructor(private router: Router, private activeRoute: ActivatedRoute,private socketService: SocketService, private userInfo: UserInformationService,
     private ngbmodal: NgbModal) { }
@@ -71,13 +76,40 @@ export class DashboardComponent implements OnInit {
       }
     }));
 
+    this.socketService.messageList((messageReturn=>{
+      messageReturn = JSON.parse(messageReturn);
+      if(messageReturn.messages.length > 0)
+        this.messages.push(messageReturn.messages)
+      console.log(messageReturn);
+    }))
+
   }
+
+  @HostListener('window:keydown',['$event'])
+  keyEvent(event: KeyboardEvent){
+    if(event.keyCode == 13)
+      this.sendMessage();
+  }
+
   newUser(){
     this.router.navigateByUrl("register");
   }
 
   JoinRoom(group, room){
-    console.log(group, room);
+    
+    this.currentServer = group;
+    this.currentRoom = room;
+    this.messages = []
+    this.isInRoom = true;
+    console.log(this.currentRoom, this.currentServer);
+
+    this.socketService.getMesssageHistory(this.currentServer,this.currentRoom);
+
+  }
+
+  sendMessage(){
+    console.log(this.currentMessage, this.currentServer, this.currentRoom);
+    this.currentMessage = "";
   }
 
   // Add and remove functions called as button event listeners by the pages html

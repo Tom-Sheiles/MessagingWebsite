@@ -29,6 +29,14 @@ export class SocketService {
     this.socket.on("roomList", res=>rooms(res));
   }
 
+  getMesssageHistory(group, room){
+    this.socket.emit('messageHistory',group, room);
+  }
+
+  messageList(messages){
+    this.socket.on("messageList",res=>messages(res))
+  }
+
   addUser(group, name): void{
     this.socket.emit("addUser",group, name);
   }

@@ -69,14 +69,27 @@
 </div>
 <div *ngIf="isInRoom">
     <div style="padding-top: 2.5cm">
-        <div class="card" style="width: 96%; height: 20cm;">
+        <div class="card" style="width: 96%; height: 20cm; overflow-y: auto">
             <div class="card-body">
-                TEXT
+                <div style="height:90%">
+                    <div *ngFor="let message of messages">
+                        <h6>{{message.name}}:<br>{{message.message}}</h6>
+                        <hr>
+                    </div>
+                    <br></div>
             </div>
+        </div>
+    </div>
+    <div class="input-group mb-3" style="width: 39.5cm">
+        <div class="input-group-prepend"><button>+</button></div>
+        <input [(ngModel)]="currentMessage" class="form-control" placeholder="Message">
+        <div class="input-group-append">
+            <button (click)="sendMessage()" class="btn btn-secondary">SEND</button>
         </div>
     </div>
     
 </div>
+<br>
 </div>    
 </body>
 

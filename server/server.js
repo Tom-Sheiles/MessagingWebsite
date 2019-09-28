@@ -43,6 +43,12 @@ var server = http.listen(port, function(){
                     console.log("    Channel database created");
                 }
             })
+            dbo.createCollection("messages",(err,res)=>{
+                if(err)
+                    console.log("Error creating messages database")
+                else
+                    console.log("    Messagess database created");
+            })
         }
         require('./auth')(app,filePath, dbo);
         require('./register')(app, filePath, dbo);

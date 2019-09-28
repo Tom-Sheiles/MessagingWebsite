@@ -8,16 +8,17 @@ module.exports = {
         var users = []
         const usersDB = database.collection('users');
         const channelDB = database.collection('channels');
+        const messagesDB = database.collection('messages');
 
         // Find the user and channel information from the database
         users = usersDB.find({}).toArray((err,userRes)=>{
             if(err) throw err;
-            console.log(userRes);
+            //console.log(userRes);
             users = userRes
         })
         groups = channelDB.find({}).toArray((err,channelRes)=>{
             if(err) throw err;
-            console.log(channelRes);
+            //console.log(channelRes);
             groups = channelRes;
         })
 
@@ -59,16 +60,22 @@ module.exports = {
             socket.on('addChannel', (addGroup, name)=>{
                 channelDB.updateOne({'groupName':addGroup},{$push:{"rooms":{$each:[name]}}},(err)=>{
                     if(err) throw err;
-                    updateGroups();
-                    console.log("Added Room");
+                    messagesDB.insertOne({'group':addGroup,'room':name,'messages':[]},()=>{
+                        updateGroups();
+                        console.log("Added Room");
+                    })
+                    
                 })
             });
 
             socket.on('removeChannel', (removeChannel, name)=>{
                 channelDB.updateOne({'groupName':removeChannel},{$pull:{"rooms":{$in:[name]}}},(err)=>{
                     if(err) throw err;
-                    updateGroups();
-                    console.log("Removed Room");
+                    messagesDB.deleteOne({'group':removeChannel,'room':name},()=>{
+                        updateGroups();
+                        console.log("Removed Room");
+                    })
+                    
                 });
             });
 
@@ -84,7 +91,10 @@ module.exports = {
                 
                 channelDB.deleteOne({"groupName":name},(err,deleted)=>{
                     console.log("Delete " + name)
-                    updateGroups();
+                    messagesDB.deleteMany({"group":name},()=>{
+                        updateGroups();
+                    })
+                    
                 });
             });
 
@@ -98,10 +108,17 @@ module.exports = {
                         })
                     }
                 })
-                
-               
-               
             });
+
+            socket.on('messageHistory',(group, room)=>{
+                messagesDB.find({"group":group,"room":room}).toArray((err,msgRes)=>{
+                    if(err) throw err;
+                    if(msgRes.length > 0){
+                        messaging.emit("messageList", JSON.stringify(msgRes[0]));
+                    }
+                })
+                
+            })
 
         });
     
