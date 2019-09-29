@@ -60,17 +60,35 @@ them the relevant information. The server was created using node.js and can be i
 using the `node server.js` command in the relevant directory.
 
 The server is responsible for larger and more secure data storage including infromation relating
-to user data and group information. The `auth.js` file is responsible for user validation and 
-will read and write to the `users.urs` file located within the directory to obtain this information.
-In the event that a new user is added to the array of users, an object containing the new 
-information is appended to the array to be stringified into the file. The users object is 
-then stored in a JSON string format.
+to user data and group information. The `auth.js` file is responsible for user validation; the server
+initially connects to a mongodb based database for the storage of user information and channel
+information and history. The users collection stores the authentication information for each
+user and will be queried for a successful login.
 
 In addition to this, the `socket.js` module is responsible with communication between each
 individually connected client the relevant data their account is granted access to from 
 the server. This module uses the *socket.io* Javascript framework for this connection;
 the server will wait for an incoming connection from a connected client socket and
 based on the incoming socket message and data will save, load or return data from 
-the `groups.urs` file and the `users.urs` file. This data can then be parsed and displayed
-by the Angular front end components for each seperate client that requests the provided
-information.
+the mongo database and will return a JSON string of the resulting information 
+found in the collections `users`, `channels` or `messages`.
+
+## REST Api
+The Angular front end communicates with the Node.js server using REST API's that 
+send a http request to the server and return a JSON object file with the server
+response.
+The Initial route accessable from the angular front end is the login page. This 
+page contains fields for the username and password of the user. when the login 
+button is pressed, a JSON object containing the two input fields are sent to 
+the authentication API where the details of the request are verified. The response
+is then returned from the API to the client which will notify the user if the 
+login attempt was successful.
+
+Similarly the register API is presented from the register angular route. This API
+will take the entered new user details and test if the account exists on the server.
+if the account is created a confirmation response if send back.
+
+The image storage API is used for uploading images to the server. This API takes 
+an object formatted as a formidable form. If the format of this request is correct,
+the image will be saved to specific directory and the location to it will be returned
+in the form of a JSON object.
