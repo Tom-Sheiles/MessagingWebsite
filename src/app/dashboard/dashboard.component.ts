@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
   currentServer = "";
   currentMessage = "";
   selectedFile = null;
+  profilepic = "images\\deafult.png";
 
   constructor(private router: Router, private activeRoute: ActivatedRoute,private socketService: SocketService, private userInfo: UserInformationService,
     private ngbmodal: NgbModal, private http: HttpClient) { }
@@ -111,12 +112,13 @@ export class DashboardComponent implements OnInit {
     console.log(this.currentRoom, this.currentServer);
 
     this.socketService.getMesssageHistory(this.currentServer,this.currentRoom);
+    this.socketService.userJoined(this.name);
 
   }
 
   sendMessage(){
     console.log(this.currentMessage, this.currentServer, this.currentRoom);
-    var messageObject = {"name":this.name,"profile":"profilepic","message":this.currentMessage}
+    var messageObject = {"name":this.name,"profile":this.profilepic,"message":this.currentMessage}
     this.socketService.sendMessage(messageObject, this.currentServer, this.currentRoom,()=>{
       this.currentMessage = "";
     })
@@ -132,10 +134,23 @@ export class DashboardComponent implements OnInit {
     imageData.append('image', this.selectedFile, this.selectedFile.name)
     this.http.post('http://localhost:3000/imageStorage',imageData).subscribe((data:any)=>{
       console.log(data)
-      let imageObject = {'name':this.name,"profile":"profilepic","image":data.name,"message":this.currentMessage}
+      let imageObject = {'name':this.name,"profile":this.profilepic,"image":data.name,"message":this.currentMessage}
       this.socketService.sendMessage(imageObject, this.currentServer, this.currentRoom, ()=>{})
       this.currentMessage = "";
     });
+  }
+
+  profileImage(event:any){
+    this.selectedFile = event.target.files[0];
+    var fileName = this.selectedFile.fileName;
+    
+
+    const imageData = new FormData();
+    imageData.append('image', this.selectedFile, this.selectedFile.name);
+    this.http.post('http://localhost:3000/imageStorage',imageData).subscribe((data:any)=>{
+      this.profilepic = "images/" + this.selectedFile.name;
+      console.log(this.profilepic)
+    })
   }
 
   // Add and remove functions called as button event listeners by the pages html

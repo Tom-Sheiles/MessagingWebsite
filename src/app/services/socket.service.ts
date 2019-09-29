@@ -33,6 +33,12 @@ export class SocketService {
     this.socket.emit('messageHistory',group, room);
   }
 
+  userJoined(name){
+    this.socket.emit('joined',name);
+  }
+
+  
+
   messageList(messages){
     this.socket.on("messageList",res=>messages(res))
   }

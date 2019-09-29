@@ -1,8 +1,13 @@
 <ul>
     <li><label><h3>Welcome </h3></label></li>
-    <li><label><h6 class="toolBarText"> {{name}}</h6></label></li>
+    <li><img src="{{profilepic}}" width="64" height="64"></li>
+    <li><label><h6 class="toolBarText" style="padding-left: 10px"> {{name}}</h6></label></li>
+    <li><div class="toolBarText" style="padding-top: 6px"><label class="btn btn-secondary">+<input type="file" style="display: none" accept="image/*" (change)="profileImage($event)"></label></div></li>
     <li><button class="toolBarButton" (click)="Logout()">Log out</button></li>
 </ul>
+<div style="padding: 4px">
+    
+</div>
 
 <body>
     <div class="grid-container">
@@ -74,7 +79,9 @@
             <div class="card-body">
                 <div style="height:90%">
                     <div *ngFor="let message of messages">
-                        <h6>{{message.name}}:<br>{{message.message}}</h6><img *ngIf="message.image != null" src="images\{{message.image}}">
+                        <img width="64" height="64" src={{message.profile}}>
+                        <h6>{{message.name}}:  
+                        <br>{{message.message}}</h6><img *ngIf="message.image != null" src="images\{{message.image}}">
                         <hr>
                     </div>
                     <br></div>
@@ -89,6 +96,8 @@
         </div>
     </div>
     
+</div>
+<div>
 </div>
 <br>
 </div>    
