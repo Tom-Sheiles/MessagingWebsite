@@ -6,10 +6,10 @@
             <div class="card-title">
                 <h3 style="color: rgb(50, 34, 87); padding-left: 100px">User Login:</h3>
             </div>
-        <input placeholder="Username"class="LoginInput"[(ngModel)]="userName">
+        <input id="login" placeholder="Username"class="LoginInput"[(ngModel)]="userName">
         <input type="password" placeholder="Passsword"class="LoginInput" style="border-top-color: white" [(ngModel)]="password">
         <br><br>
-        <button (click)="onClick()" class="LoginButton"  type="button">Login</button>
+        <button id="loginBtn" (click)="onClick()" class="LoginButton"  type="button">Login</button>
         </div>
     </div>
     </div>
