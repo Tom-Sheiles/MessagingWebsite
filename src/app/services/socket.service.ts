@@ -37,7 +37,9 @@ export class SocketService {
     this.socket.emit('joined',name);
   }
 
-  
+  userJoinMsg(name){
+    this.socket.on("returnJoin",res=>name(res));
+  }
 
   messageList(messages){
     this.socket.on("messageList",res=>messages(res))

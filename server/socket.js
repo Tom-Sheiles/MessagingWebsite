@@ -132,6 +132,10 @@ module.exports = {
                 console.log(JSON.parse(image));
             })
 
+            socket.on("joined",(usrName)=>{
+                messaging.emit("returnJoin", usrName + " Joined the chat");
+            })
+
         });
     
     }

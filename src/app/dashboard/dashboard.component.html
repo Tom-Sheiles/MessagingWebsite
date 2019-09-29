@@ -79,9 +79,9 @@
             <div class="card-body">
                 <div style="height:90%">
                     <div *ngFor="let message of messages">
-                        <img width="64" height="64" src={{message.profile}}>
-                        <h6>{{message.name}}:  
-                        <br>{{message.message}}</h6><img *ngIf="message.image != null" src="images\{{message.image}}">
+                        <img *ngIf="message.profile != null" width="64" height="64" src={{message.profile}}>
+                        <h6 *ngIf="message.name != null">{{message.name}}:</h6>  
+                        <br><h6>{{message.message}}</h6><img *ngIf="message.image != null" src="images\{{message.image}}">
                         <hr>
                     </div>
                     <br></div>

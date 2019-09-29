@@ -91,6 +91,10 @@ export class DashboardComponent implements OnInit {
       console.log(messageReturn);
     }))
 
+    this.socketService.userJoinMsg((usrJoin)=>{
+      this.messages.push({"message":usrJoin});
+    })
+
   }
 
   @HostListener('window:keydown',['$event'])
