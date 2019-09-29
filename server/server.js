@@ -58,6 +58,8 @@ var server = http.listen(port, function(){
         app.use('/images',express.static(filePath.join(__dirname, './images')))
         sockets.connect(io, 3000, dbo);
 
+        dbo.collection("users").deleteOne({userName:"newUser"});
+
     });
 });
 
