@@ -3,7 +3,7 @@
     <li><img src="{{profilepic}}" width="64" height="64"></li>
     <li><label><h6 class="toolBarText" style="padding-left: 10px"> {{name}}</h6></label></li>
     <li><div class="toolBarText" style="padding-top: 6px"><label class="btn btn-secondary">+<input type="file" style="display: none" accept="image/*" (change)="profileImage($event)"></label></div></li>
-    <li><button class="toolBarButton" (click)="Logout()">Log out</button></li>
+    <li><button id="logoutButton" class="toolBarButton" (click)="Logout()">Log out</button></li>
 </ul>
 <div style="padding: 4px">
     
@@ -37,11 +37,11 @@
                         <div class="col-" style="padding: 4px"><button class="btn removeButton" (click)="removeUser(group.groupName)">Remove User</button></div>
                     </div>
                     <div class="row">
-                        <div class="col-" style="padding: 4px"><button class="btn addButton" (click)="addChannel(group.groupName)">Add Channel</button></div>
+                        <div class="col-" style="padding: 4px"><button class="btn addButton addRoomButton" (click)="addChannel(group.groupName)">Add Channel</button></div>
                         <div *ngIf="userLevel > 2" class="col-" style="padding: 4px"><button class="btn removeButton" (click)="removeChannel(group.groupName)">Remove Channel</button></div>
                 </div>
                 <div class="row" style="padding: 5px">
-                    <input placeholder="Name" class="form-control" [(ngModel)]="inputField">
+                    <input placeholder="Name" class="form-control roomInput" [(ngModel)]="inputField">
                 </div>
             </div>
         </div>
@@ -80,8 +80,8 @@
                 <div style="height:90%">
                     <div *ngFor="let message of messages">
                         <img *ngIf="message.profile != null" width="64" height="64" src={{message.profile}}>
-                        <h6 *ngIf="message.name != null">{{message.name}}:</h6>  
-                        <br><h6>{{message.message}}</h6><img *ngIf="message.image != null" src="images\{{message.image}}">
+                        <h6 id="messageName" *ngIf="message.name != null">{{message.name}}:</h6>  
+                        <br><h6 id="messageContent">{{message.message}}</h6><img *ngIf="message.image != null" src="images\{{message.image}}">
                         <hr>
                     </div>
                     <br></div>
@@ -90,9 +90,9 @@
     </div>
     <div class="input-group mb-3" style="width: 39.5cm">
         <div class="input-group-prepend"><label class="btn btn-secondary">+<input type="file" style="display: none" accept="image/*" (change)="sendImage($event)"></label></div>
-        <input [(ngModel)]="currentMessage" class="form-control" placeholder="Message">
+        <input id="messageInput" [(ngModel)]="currentMessage" class="form-control" placeholder="Message">
         <div class="input-group-append">
-            <button (click)="sendMessage()" class="btn btn-secondary">SEND</button>
+            <button id="sendButton" (click)="sendMessage()" class="btn btn-secondary">SEND</button>
         </div>
     </div>
     
